@@ -12,9 +12,11 @@
 			<TableView.Root>
 				<TableSection>
 					<EntryCell Label="Title" Text="{Binding Title}" />
-					<EntryCell Label="Latitude" Text="{Binding Latitude}" Keyboard="Numeric" />
-					<EntryCell Label="Longitude" Text="{Binding Longitude}" Keyboard="Numeric" />
-					<EntryCell Label="Date" Text="{Binding Date, StringFormat='{0:d}'}" />
+                    <EntryCell Label="Latitude"  Text="{Binding Latitude , StringFormat='{0:0.0000}'}"
+                                     Keyboard="Numeric" />
+                    <EntryCell Label="Longitude" Text="{Binding Longitude, StringFormat='{0:0.0000}'}"
+                                     Keyboard="Numeric" />
+                    <EntryCell Label="Date" Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"/
 					<EntryCell Label="Rating" Text="{Binding Rating}" Keyboard="Numeric" />
 					<EntryCell Label="Notes" Text="{Binding Notes}" />
 				</TableSection>
