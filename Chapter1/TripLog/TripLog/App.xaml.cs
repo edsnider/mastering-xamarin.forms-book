@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using TripLog.Views;
 
 namespace TripLog
 {
@@ -9,7 +10,7 @@ namespace TripLog
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()
