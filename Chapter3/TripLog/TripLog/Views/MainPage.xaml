@@ -1,18 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="TripLog.Views.MainPage"
+    xmlns:vm="clr-namespace:TripLog.ViewModels"
     Title="TripLog">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="New" Clicked="New_Clicked" />
+        <ToolbarItem Text="New" Command="{Binding NewCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <CollectionView x:Name="trips"
                         SelectionMode="Single"
-                        ItemsSource="{Binding LogEntries}"
-                        SelectionChanged="Trips_SelectionChanged">
+                        ItemsSource="{Binding LogEntries}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=ViewCommand}"
+                                                  CommandParameter="{Binding}" />
+                        </Grid.GestureRecognizers>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="3*" />
