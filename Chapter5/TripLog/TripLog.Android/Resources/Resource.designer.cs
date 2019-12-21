@@ -5971,11 +5971,26 @@ namespace TripLog.Droid
 			// aapt resource value: 0x7F070088
 			public const int notify_panel_notification_icon_bg = 2131165320;
 			
-			// aapt resource value: 0x7F070089
-			public const int tooltip_frame_dark = 2131165321;
-			
 			// aapt resource value: 0x7F07008A
-			public const int tooltip_frame_light = 2131165322;
+			public const int stars_2 = 2131165322;
+			
+			// aapt resource value: 0x7F07008B
+			public const int stars_3 = 2131165323;
+			
+			// aapt resource value: 0x7F07008C
+			public const int stars_4 = 2131165324;
+			
+			// aapt resource value: 0x7F07008D
+			public const int stars_5 = 2131165325;
+			
+			// aapt resource value: 0x7F070089
+			public const int star_1 = 2131165321;
+			
+			// aapt resource value: 0x7F07008E
+			public const int tooltip_frame_dark = 2131165326;
+			
+			// aapt resource value: 0x7F07008F
+			public const int tooltip_frame_light = 2131165327;
 			
 			static Drawable()
 			{
