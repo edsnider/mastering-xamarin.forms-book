@@ -3,7 +3,6 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using TripLog.ViewModels;
-using TripLog.Services;
 
 namespace TripLog.Views
 {
@@ -14,8 +13,6 @@ namespace TripLog.Views
         public DetailPage()
         {
             InitializeComponent();
-
-            BindingContext = new DetailViewModel(DependencyService.Get<INavService>());
         }
 
         protected override void OnAppearing()
