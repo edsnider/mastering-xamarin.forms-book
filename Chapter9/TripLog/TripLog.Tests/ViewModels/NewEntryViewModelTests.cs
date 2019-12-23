@@ -35,7 +35,9 @@ namespace TripLog.Tests.ViewModels
                     Longitude = 321
                 });
 
-            _vm = new NewEntryViewModel(_navMock.Object, _locMock.Object, _dataMock.Object);
+            var analyticsMock = new Mock<IAnalyticsService>().Object;
+
+            _vm = new NewEntryViewModel(_navMock.Object, _locMock.Object, _dataMock.Object, analyticsMock);
         }
 
         [Test]

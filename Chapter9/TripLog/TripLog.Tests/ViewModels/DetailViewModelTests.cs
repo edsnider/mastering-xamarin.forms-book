@@ -17,8 +17,9 @@ namespace TripLog.Tests.ViewModels
         public void Setup()
         {
             var navMock = new Mock<INavService>().Object;
+            var analyticsMock = new Mock<IAnalyticsService>().Object;
 
-            _vm = new DetailViewModel(navMock);
+            _vm = new DetailViewModel(navMock, analyticsMock);
         }
 
         [Test]

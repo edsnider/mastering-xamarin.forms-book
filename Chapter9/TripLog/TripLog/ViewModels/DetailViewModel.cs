@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TripLog.Exceptions;
 using TripLog.Models;
 using TripLog.Services;
@@ -18,8 +19,8 @@ namespace TripLog.ViewModels
             }
         }
 
-        public DetailViewModel(INavService navService)
-            : base(navService)
+        public DetailViewModel(INavService navService, IAnalyticsService analyticsService)
+            : base(navService, analyticsService)
         {
         }
 
@@ -30,6 +31,11 @@ namespace TripLog.ViewModels
 
         public override void Init(TripLogEntry parameter)
         {
+            AnalyticsService.TrackEvent("Entry Detail Page", new Dictionary<string, string>
+                {
+                   { "Title", parameter.Title }
+                });
+
             Entry = parameter;
         }
     }

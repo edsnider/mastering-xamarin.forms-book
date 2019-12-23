@@ -25,6 +25,7 @@ namespace TripLog.Modules
 
             Bind<Akavache.IBlobCache>().ToConstant(Akavache.BlobCache.LocalMachine);
             Bind<IAuthService>().To<AuthService>().InSingletonScope();
+            Bind<IAnalyticsService>().To<AppCenterAnalyticsService>().InSingletonScope();
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using Ninject;
 using Ninject.Modules;
 using TripLog.Services;
 using TripLog.Views;
 using TripLog.ViewModels;
 using TripLog.Modules;
-using Xamarin.Essentials;
 
 namespace TripLog
 {
@@ -71,7 +74,10 @@ namespace TripLog
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            AppCenter.Start("ios={Your iOS app secret here};"
+               + "android={Your Android app secret here};"
+               + "uwp={Your UWP app secret here}",
+               typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

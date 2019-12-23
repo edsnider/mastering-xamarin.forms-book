@@ -12,8 +12,8 @@ namespace TripLog.ViewModels
         Command _signInCommand;
         public Command SignInCommand => _signInCommand ?? (_signInCommand = new Command(SignIn));
 
-        public SignInViewModel(INavService navService, IAuthService authService, ITripLogDataService tripLogService)
-            : base(navService)
+        public SignInViewModel(INavService navService, IAuthService authService, ITripLogDataService tripLogService, IAnalyticsService analyticsService)
+            : base(navService, analyticsService)
         {
             _authService = authService;
             _tripLogService = tripLogService;

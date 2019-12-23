@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Akavache;
 using TripLog.Models;
 using TripLog.Services;
+using System.Collections.Generic;
 
 namespace TripLog.ViewModels
 {
@@ -32,8 +33,8 @@ namespace TripLog.ViewModels
 
         public Command SignOutCommand => new Command(_tripLogService.Unauthenticate);
 
-        public MainViewModel(INavService navService, ITripLogDataService tripLogService, IBlobCache cache)
-            : base(navService)
+        public MainViewModel(INavService navService, ITripLogDataService tripLogService, IBlobCache cache, IAnalyticsService analyticsService)
+            : base(navService, analyticsService)
         {
             _tripLogService = tripLogService;
             _cache = cache;
@@ -63,6 +64,13 @@ namespace TripLog.ViewModels
                     {
                         LogEntries = new ObservableCollection<TripLogEntry>(entries);
                         IsBusy = false;
+                    });
+            }
+            catch (Exception e)
+            {
+                AnalyticsService.TrackError(e, new Dictionary<string, string>
+                    {
+                        { "Method", "MainViewModel.LoadEntries" }
                     });
             }
             finally
