@@ -22,5 +22,6 @@
     <Folder Include="Modules\" />
     <Folder Include="Controls\" />
     <Folder Include="Converters\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>
