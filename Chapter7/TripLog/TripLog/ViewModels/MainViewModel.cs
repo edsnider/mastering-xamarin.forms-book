@@ -30,6 +30,8 @@ namespace TripLog.ViewModels
         Command _refreshCommand;
         public Command RefreshCommand => _refreshCommand ?? (_refreshCommand = new Command(LoadEntries));
 
+        public Command SignOutCommand => new Command(_tripLogService.Unauthenticate);
+
         public MainViewModel(INavService navService, ITripLogDataService tripLogService, IBlobCache cache)
             : base(navService)
         {

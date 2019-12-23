@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using TripLog.Models;
 
 namespace TripLog.Services
@@ -11,28 +12,75 @@ namespace TripLog.Services
         readonly Uri _baseUri;
         readonly IDictionary<string, string> _headers;
 
-        public TripLogApiDataService(Uri baseUri)
+        public Action<string> AuthorizedDelegate { get; set; }
+        public Action UnauthorizedDelegate { get; set; }
+
+        struct IdProviderToken
+        {
+            [JsonProperty("access_token")]
+            public string AccessToken { get; set; }
+        }
+
+        public TripLogApiDataService(Uri baseUri, string authToken)
         {
             _baseUri = baseUri;
             _headers = new Dictionary<string, string>();
-
-            // TODO: Add header with auth-based token in chapter 7
+            _headers.Add("x-zumo-auth", authToken);
         }
+
+        public async Task AuthenticateAsync(string idProvider, string idProviderToken)
+        {
+            var token = new IdProviderToken
+            {
+                AccessToken = idProviderToken
+            };
+
+            var url = new Uri(_baseUri, string.Format(".auth/login/{0}", idProvider));
+            var response = await SendRequestAsync<TripLogApiAuthToken>(url, HttpMethod.Post, requestData: token);
+
+            if (!string.IsNullOrWhiteSpace(response?.AuthenticationToken))
+            {
+                var authToken = response.AuthenticationToken;
+
+                // Update this service with the new auth token
+                _headers["x-zumo-auth"] = authToken;
+
+                AuthorizedDelegate?.Invoke(authToken);
+            }
+        }
+
+        public void Unauthenticate() => UnauthorizedDelegate?.Invoke();
 
         public async Task<IList<TripLogEntry>> GetEntriesAsync()
         {
-            var url = new Uri(_baseUri, "/api/entry");
-            var response = await SendRequestAsync<TripLogEntry[]>(url, HttpMethod.Get, _headers);
+            try
+            {
+                var url = new Uri(_baseUri, "/api/entry");
+                var response = await SendRequestAsync<TripLogEntry[]>(url, HttpMethod.Get, _headers);
 
-            return response;
+                return response;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                UnauthorizedDelegate?.Invoke();
+                throw;
+            }
         }
 
         public async Task<TripLogEntry> AddEntryAsync(TripLogEntry entry)
         {
-            var url = new Uri(_baseUri, "/api/entry");
-            var response = await SendRequestAsync<TripLogEntry>(url, HttpMethod.Post, _headers, entry);
+            try
+            {
+                var url = new Uri(_baseUri, "/api/entry");
+                var response = await SendRequestAsync<TripLogEntry>(url, HttpMethod.Post, _headers, entry);
 
-            return response;
+                return response;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                UnauthorizedDelegate?.Invoke();
+                throw;
+            }
         }
     }
 }

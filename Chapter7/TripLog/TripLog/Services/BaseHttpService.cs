@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,6 +54,13 @@ namespace TripLog.Services
                     if (response.IsSuccessStatusCode)
                     {
                         result = JsonConvert.DeserializeObject<T>(content);
+                    }
+                    else
+                    {
+                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            throw new UnauthorizedAccessException();
+                        }
                     }
                 }
             }

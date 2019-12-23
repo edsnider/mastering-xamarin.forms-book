@@ -19,6 +19,7 @@ namespace TripLog.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
             LoadApplication(new App(new TripLogPlatformModule()));
         }
